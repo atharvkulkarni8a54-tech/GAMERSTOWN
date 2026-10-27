@@ -1,5 +1,5 @@
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import "./App.css";
 
 type Customer = {
@@ -1327,76 +1327,150 @@ function Empty({ message }: { message: string }) {
 function CustomerPreview() {
   const [customerId, setCustomerId] = useState("");
   const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [error, setError] = useState("");
+  const [game, setGame] = useState("Valorant");
+  const [seconds, setSeconds] = useState(95 * 60);
+  const [running, setRunning] = useState(false);
+  const [ended, setEnded] = useState(false);
+  const [summary, setSummary] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
+
+  const initialSeconds = 95 * 60;
+  const usedSeconds = initialSeconds - seconds;
+  const estimatedBill = Math.max(0, Math.ceil(usedSeconds / 60) * (100 / 60));
+  const games = ["Valorant", "Counter-Strike 2", "Steam", "GTA V", "Cyberpunk 2077"];
+
+  useEffect(() => {
+    if (!loggedIn || !running || ended || seconds <= 0) return;
+    const timer = window.setInterval(() => {
+      setSeconds((current) => {
+        if (current <= 1) {
+          setRunning(false);
+          setEnded(true);
+          setSummary(true);
+          return 0;
+        }
+        return current - 1;
+      });
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [loggedIn, running, ended, seconds]);
+
+  const formatTime = (total: number) => {
+    const safe = Math.max(0, total);
+    const h = Math.floor(safe / 3600);
+    const m = Math.floor((safe % 3600) / 60);
+    const sec = safe % 60;
+    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+  };
+
+  const login = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (customerId.trim() !== "atharva011" || password !== "150207") {
+      setError("Invalid Customer ID or password.");
+      return;
+    }
+    setError("");
+    setLoggedIn(true);
+    setSummary(false);
+    setEnded(false);
+    setSeconds(initialSeconds);
+    // The session starts immediately after a successful login.
+    setRunning(true);
+  };
+
+  const endSession = () => {
+    setRunning(false);
+    setEnded(true);
+    setSummary(true);
+  };
+
+  const logout = () => {
+    setLoggedIn(false);
+    setCustomerId("");
+    setPassword("");
+    setError("");
+    setRunning(false);
+    setEnded(false);
+    setSummary(false);
+    setSeconds(initialSeconds);
+    setGame("Valorant");
+  };
 
   return (
     <section className="customer-preview">
-      <div className="preview-brand">
-        <div className="brand-mark">GT</div>
-        <strong>GAMERS TOWN</strong>
-        <span>PLAYER PORTAL</span>
-      </div>
+      <header className="preview-topbar">
+        <div className="preview-brand">
+          <div className="brand-mark">GT</div>
+          <div><strong>GAMERS TOWN</strong><span>PLAYER PORTAL</span></div>
+        </div>
+        {loggedIn && <button className="secondary-button" onClick={logout}>Log out</button>}
+      </header>
 
-      <div className="login-card">
-        <div className="eyebrow">WELCOME BACK</div>
-        <h2>Ready to play?</h2>
-        <p>Sign in to access your gaming account.</p>
-
-        <label className="field">
-          <span>Customer ID</span>
-          <input
-            value={customerId}
-            onChange={(e) => setCustomerId(e.target.value)}
-            placeholder="Enter your Customer ID"
-          />
-        </label>
-
-        <label className="field">
-          <span>Password</span>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password"
-          />
-        </label>
-
-        <button
-          className="primary-button full-button"
-          onClick={() =>
-            window.alert(
-              "Customer login is a visual demo. Authentication is not connected yet.",
-            )
-          }
-        >
-          Sign in to gaming station
-        </button>
-
-        <button
-          className="text-button"
-          onClick={() => window.alert("Please ask the counter staff for account assistance.")}
-        >
-          Forgot password?
-        </button>
-      </div>
-
-      <button className="admin-corner" onClick={() => setShowAdmin(!showAdmin)}>
-        Admin login
-      </button>
-
-      {showAdmin && (
-        <div className="admin-login-card">
-          <h3>Admin access</h3>
-          <p>Visual demo only. Authentication is not connected.</p>
-          <button className="secondary-button" onClick={() => setShowAdmin(false)}>
-            Close
-          </button>
+      {!loggedIn ? (
+        <form className="login-card" onSubmit={login}>
+          <div className="eyebrow">GAMERSTOWN MEMBER ACCESS</div>
+          <h2>Ready to play?</h2>
+          <p>Sign in to access your gaming account.</p>
+          <label className="field">
+            <span>Customer ID</span>
+            <input value={customerId} onChange={(e) => setCustomerId(e.target.value)} placeholder="Enter your customer ID" autoComplete="username" required />
+          </label>
+          <label className="field">
+            <span>Password</span>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" autoComplete="current-password" required />
+          </label>
+          {error && <p className="customer-error">{error}</p>}
+          <button className="primary-button full-button" type="submit">Sign in to gaming →</button>
+          <p className="customer-hint">Forgot your details? Please ask the counter staff.</p>
+          <button className="text-button" type="button" onClick={() => setShowAdmin(!showAdmin)}>Admin login</button>
+          {showAdmin && <p className="customer-hint">Use the admin dashboard sidebar to return to admin access.</p>}
+        </form>
+      ) : summary ? (
+        <div className="customer-panel session-summary">
+          <div className="eyebrow">SESSION SUMMARY</div>
+          <h2>{seconds === 0 ? "Time is up!" : "Session ended"}</h2>
+          <p>Your gaming session has stopped.</p>
+          <div className="customer-stat-grid">
+            <div className="customer-stat"><span>Station</span><strong>PC-04</strong></div>
+            <div className="customer-stat"><span>Game</span><strong>{game}</strong></div>
+            <div className="customer-stat"><span>Time used</span><strong>{formatTime(usedSeconds)}</strong></div>
+            <div className="customer-stat"><span>Time remaining</span><strong>{formatTime(seconds)}</strong></div>
+          </div>
+          <div className="customer-bill"><span>Estimated session amount</span><strong>₹{estimatedBill.toFixed(2)}</strong></div>
+          <p className="customer-hint">Please visit the counter for final billing and payment. This is a demo estimate, not a real invoice.</p>
+          <button className="primary-button full-button" onClick={logout}>Return to customer login</button>
+        </div>
+      ) : (
+        <div className="customer-dashboard">
+          <div className="customer-welcome">
+            <div><div className="eyebrow">PLAYER DASHBOARD</div><h2>Welcome back, Atharva!</h2><p>Customer ID: {customerId}</p></div>
+            <div className="station-chip">● PC-04 · ACTIVE STATION</div>
+          </div>
+          <div className="customer-stat-grid">
+            <div className="customer-stat timer-stat"><span>TIME REMAINING</span><strong className="timer-number">{formatTime(seconds)}</strong><small>{running ? "Your session is running" : "Session ended"}</small></div>
+            <div className="customer-stat"><span>WALLET BALANCE</span><strong>₹450.00</strong><small>Demo balance · Counter managed</small></div>
+            <div className="customer-stat"><span>YOUR STATION</span><strong>PC-04</strong><small>Gaming PC</small></div>
+          </div>
+          <div className="customer-panel">
+            <div className="customer-section-heading"><div><div className="eyebrow">GAME LIBRARY</div><h3>What do you want to play?</h3></div><span className="customer-count">{games.length} titles</span></div>
+            <div className="customer-game-grid">
+              {games.map((item) => <button key={item} className={`customer-game ${game === item ? "selected" : ""}`} onClick={() => setGame(item)} disabled={ended}><span className="game-symbol">▶</span><strong>{item}</strong><small>{game === item ? "Selected" : "Select game"}</small></button>)}
+            </div>
+            <p className="customer-hint">Game selection is a preview only; it does not launch or control games on the PC.</p>
+          </div>
+          <div className="customer-panel">
+            <div className="eyebrow">GAMING SESSION</div>
+            <h3>{running ? "Your session is live!" : "Session ended"}</h3>
+            <p className="customer-hint">Currently selected game: <strong>{game}</strong></p>
+            <div className="counter-notice"><strong>Need food, drinks or extra gaming time?</strong><p>Please visit the counter. Orders, additional time and payments are handled by staff.</p></div>
+            {!ended && <button className="danger-button" onClick={() => { if (window.confirm("End your gaming session and view the summary?")) endSession(); }}>End session</button>}
+          </div>
+          <p className="customer-hint customer-disclaimer">DEMO PREVIEW · Timer, wallet and billing are not connected to the admin database or real gaming station.</p>
         </div>
       )}
-
-      <p className="preview-footnote">
-        Customer portal preview · Login is not connected to a backend
-      </p>
+      {!loggedIn && <p className="preview-footnote">NEED HELP? PLEASE VISIT THE GAMING COUNTER.</p>}
     </section>
   );
 }
