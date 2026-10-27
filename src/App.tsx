@@ -1339,7 +1339,13 @@ function CustomerPreview() {
   const initialSeconds = 95 * 60;
   const usedSeconds = initialSeconds - seconds;
   const estimatedBill = Math.max(0, Math.ceil(usedSeconds / 60) * (100 / 60));
-  const games = ["Valorant", "Counter-Strike 2", "Steam", "GTA V", "Cyberpunk 2077"];
+  const games = [
+    { name: "Valorant", image: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_pink_color_version.svg" },
+    { name: "Counter-Strike 2", image: "https://cdn.cloudflare.steamstatic.com/steam/apps/730/library_600x900.jpg" },
+    { name: "Steam", image: "https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" },
+    { name: "GTA V", image: "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_600x900.jpg" },
+    { name: "Cyberpunk 2077", image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/library_600x900.jpg" },
+  ];
 
   useEffect(() => {
     if (!loggedIn || !running || ended || seconds <= 0) return;
@@ -1456,7 +1462,7 @@ function CustomerPreview() {
           <div className="customer-panel">
             <div className="customer-section-heading"><div><div className="eyebrow">GAME LIBRARY</div><h3>What do you want to play?</h3></div><span className="customer-count">{games.length} titles</span></div>
             <div className="customer-game-grid">
-              {games.map((item) => <button key={item} className={`customer-game ${game === item ? "selected" : ""}`} onClick={() => setGame(item)} disabled={ended}><span className="game-symbol">▶</span><strong>{item}</strong><small>{game === item ? "Selected" : "Select game"}</small></button>)}
+              {games.map((item) => <button key={item.name} className={`customer-game ${game === item.name ? "selected" : ""}`} onClick={() => setGame(item.name)} disabled={ended}><img className="customer-game-image" src={item.image} alt={`${item.name} demo cover`} loading="lazy" /><span className="customer-game-title"><strong>{item.name}</strong><small>{game === item.name ? "Selected" : "Select game"}</small></span></button>)}
             </div>
             <p className="customer-hint">Game selection is a preview only; it does not launch or control games on the PC.</p>
           </div>
