@@ -1,5 +1,5 @@
-
 import { useEffect, useMemo, useState, type FormEvent } from "react";
+import Pricing from "./components/Pricing";
 import "./App.css";
 
 type Customer = {
@@ -103,7 +103,7 @@ export default function App() {
   const [customers, setCustomers] = useState(initialCustomers);
   const [stations, setStations] = useState(initialStations);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
- const [inventory, setInventory] = useState<InventoryItem[]>(initialInventory);
+  const [inventory, setInventory] = useState<InventoryItem[]>(initialInventory);
 
   const [stockName, setStockName] = useState("");
   const [stockCategory, setStockCategory] = useState("Snacks");
@@ -422,6 +422,7 @@ export default function App() {
     "Gaming Stations",
     "Customers & Wallets",
     "Add Gaming Time",
+    "Pricing",
     "Inventory",
     "Transactions",
     "Customer UI Preview",
@@ -1098,6 +1099,8 @@ export default function App() {
             </div>
           </>
         )}
+
+        {page === "Pricing" && <Pricing />}
 
         {page === "Transactions" && (
           <section className="panel">

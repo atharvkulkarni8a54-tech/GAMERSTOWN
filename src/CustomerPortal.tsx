@@ -1,6 +1,6 @@
-
-import { useState, type FormEvent, type CSSProperties } from "react";
+import { useState, type FormEvent } from "react";
 import CustomerDashboard from "./CustomerDashboard";
+import "./CustomerPortal.css";
 
 export default function CustomerPortal() {
   const [customerId, setCustomerId] = useState("");
@@ -8,256 +8,80 @@ export default function CustomerPortal() {
   const [showPassword, setShowPassword] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState("");
+  const [muted, setMuted] = useState(true);
 
   function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    if (
-      customerId.trim() === "atharva011" &&
-      password === "150207"
-    ) {
+    // Demo-only credentials from the existing prototype.
+    if (customerId.trim() === "atharva011" && password === "150207") {
       setError("");
       setLoggedIn(true);
     } else {
-      setError("Incorrect customer ID or password.");
+      setError("Those demo credentials don't match. Please check and try again.");
     }
   }
 
-  if (loggedIn) {
-    return <CustomerDashboard />;
-  }
+  if (loggedIn) return <CustomerDashboard />;
 
   return (
-    <main style={styles.page}>
-      <section style={styles.card}>
-        <div style={styles.logo}>
-          G<span style={{ color: "#a3e635" }}>T</span>
-          <span style={styles.logoDot}>.</span>
+    <main className="gt-login-page">
+      <div className="gt-video-wall" aria-hidden="true">
+        <video className="gt-login-video" autoPlay muted={muted} loop playsInline poster="https://images.pexels.com/photos/7915437/pexels-photo-7915437.jpeg?auto=compress&cs=tinysrgb&w=1920">
+          <source src="https://videos.pexels.com/video-files/7914770/7914770-hd_1920_1080_25fps.mp4" type="video/mp4" />
+          <source src="https://videos.pexels.com/video-files/7849217/7849217-hd_1920_1080_25fps.mp4" type="video/mp4" />
+        </video>
+        <div className="gt-video-shade" />
+        <div className="gt-video-grain" />
+      </div>
+
+      <header className="gt-login-topbar">
+        <a className="gt-wordmark" href="#home" aria-label="Gamers Town home">
+          <span className="gt-logo-symbol">GT</span>
+          <span className="gt-wordmark-text">GAMERS<span>TOWN</span><small>PLAY. COMPETE. REPEAT.</small></span>
+        </a>
+        <div className="gt-live-pill"><i /> GAMING FLOOR ONLINE</div>
+        <button className="gt-sound-toggle" type="button" onClick={() => setMuted(v => !v)} aria-label={muted ? "Unmute background video" : "Mute background video"}>
+          {muted ? "◖×" : "◖))"} <span>{muted ? "SOUND OFF" : "SOUND ON"}</span>
+        </button>
+      </header>
+
+      <section className="gt-login-stage">
+        <div className="gt-login-copy">
+          <div className="gt-kicker"><span /> YOUR NEXT MATCH STARTS HERE</div>
+          <h1>ENTER THE<br/><em>ARENA.</em></h1>
+          <p className="gt-login-intro">Your setup is waiting. Sign in to access your gaming time, wallet balance, and session details.</p>
+          <div className="gt-feature-list">
+            <div><span className="gt-feature-icon">01</span><p><b>YOUR SESSION</b><small>Check remaining play time live</small></p></div>
+            <div><span className="gt-feature-icon">02</span><p><b>YOUR WALLET</b><small>Keep your gaming balance in view</small></p></div>
+            <div><span className="gt-feature-icon">03</span><p><b>YOUR NEXT GAME</b><small>Get back into the action faster</small></p></div>
+          </div>
+          <div className="gt-game-tags"><span>VALORANT</span><span>CS2</span><span>GTA V</span><span>PC + CONSOLE</span></div>
         </div>
 
-        <div style={styles.badge}>GAMERSTOWN MEMBER ACCESS</div>
-
-        <h1 style={styles.heading}>Ready to play?</h1>
-
-        <p style={styles.subtitle}>
-          Sign in to access your gaming account.
-        </p>
-
-        <form onSubmit={handleLogin} style={styles.form}>
-          <label htmlFor="customerId" style={styles.label}>
-            CUSTOMER ID
-          </label>
-
-          <input
-            id="customerId"
-            type="text"
-            autoComplete="username"
-            value={customerId}
-            onChange={(event) => setCustomerId(event.target.value)}
-            placeholder="Enter your customer ID"
-            style={styles.input}
-            required
-          />
-
-          <label htmlFor="customerPassword" style={styles.label}>
-            PASSWORD
-          </label>
-
-          <div style={styles.passwordWrapper}>
-            <input
-              id="customerPassword"
-              type={showPassword ? "text" : "password"}
-              autoComplete="current-password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              placeholder="Enter your password"
-              style={{ ...styles.input, paddingRight: 70 }}
-              required
-            />
-
-            <button
-              type="button"
-              onClick={() => setShowPassword((previous) => !previous)}
-              style={styles.showButton}
-            >
-              {showPassword ? "HIDE" : "SHOW"}
-            </button>
-          </div>
-
-          {error && (
-            <div role="alert" style={styles.error}>
-              {error}
+        <div className="gt-auth-column">
+          <div className="gt-auth-card">
+            <div className="gt-auth-card-head">
+              <div className="gt-auth-brand">GT<span> / MEMBER ACCESS</span></div>
+              <span className="gt-lock-mark">⌑</span>
             </div>
-          )}
-
-          <button type="submit" style={styles.loginButton}>
-            <span>SIGN IN TO GAMING</span>
-            <span>→</span>
-          </button>
-        </form>
-
-        <div style={styles.footer}>
-          <span style={styles.statusDot} />
-          <span>GAMING FLOOR SYSTEM</span>
-          <span style={styles.demo}>LOCAL DEMO</span>
+            <div className="gt-auth-title">Welcome back<span>.</span></div>
+            <p className="gt-auth-subtitle">Sign in to continue your session.</p>
+            <form onSubmit={handleLogin} className="gt-auth-form">
+              <label htmlFor="customerId">CUSTOMER ID</label>
+              <div className="gt-input-wrap"><span className="gt-input-icon">◎</span><input id="customerId" type="text" autoComplete="username" value={customerId} onChange={e=>setCustomerId(e.target.value)} placeholder="Enter your member ID" required /></div>
+              <label htmlFor="customerPassword">PASSWORD</label>
+              <div className="gt-input-wrap"><span className="gt-input-icon">⌑</span><input id="customerPassword" type={showPassword ? "text" : "password"} autoComplete="current-password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Enter your password" required /><button type="button" className="gt-show-password" onClick={()=>setShowPassword(v=>!v)}>{showPassword ? "HIDE" : "SHOW"}</button></div>
+              {error && <div role="alert" className="gt-login-error">{error}</div>}
+              <button type="submit" className="gt-login-submit"><span>ENTER GAMING FLOOR</span><b>↗</b></button>
+            </form>
+            <div className="gt-auth-divider"><span/>SECURE MEMBER ACCESS<span/></div>
+            <div className="gt-demo-note"><span>i</span><p><b>Demo account</b><small>Use the prototype credentials supplied with your project.</small></p></div>
+            <div className="gt-auth-foot"><span><i/> SYSTEM OPERATIONAL</span><span>GAMERS TOWN © 2026</span></div>
+          </div>
+          <div className="gt-seat-status"><span className="gt-seat-dot"/><div><b>READY WHEN YOU ARE</b><small>Your gaming session is managed at the counter.</small></div><span className="gt-seat-arrow">↗</span></div>
         </div>
       </section>
-
-      <p style={styles.bottomText}>
-        NEED HELP? PLEASE VISIT THE GAMING COUNTER.
-      </p>
+      <footer className="gt-login-footer"><span>BUILT FOR THE NEXT GENERATION OF PLAY</span><span>PLEASE VISIT THE COUNTER FOR BOOKINGS & TOP-UPS</span><span>01 / MEMBER PORTAL</span></footer>
     </main>
   );
 }
-
-const styles: Record<string, CSSProperties> = {
-  page: {
-    minHeight: "100vh",
-    width: "100%",
-    boxSizing: "border-box",
-    background:
-      "radial-gradient(ellipse at top, #1b2b20 0%, #0b100d 52%, #070908 100%)",
-    color: "#f4f7f4",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 24,
-    fontFamily: "Inter, Segoe UI, Arial, sans-serif",
-  },
-  card: {
-    width: "100%",
-    maxWidth: 420,
-    boxSizing: "border-box",
-    padding: 36,
-    background: "#111713",
-    border: "1px solid #29372d",
-    borderRadius: 18,
-    boxShadow: "0 24px 80px #0008",
-  },
-  logo: {
-    fontSize: 42,
-    fontWeight: 900,
-    letterSpacing: -4,
-    marginBottom: 22,
-  },
-  logoDot: {
-    color: "#a3e635",
-  },
-  badge: {
-    display: "inline-block",
-    fontSize: 10,
-    fontWeight: 800,
-    letterSpacing: 1.5,
-    color: "#a3e635",
-    background: "#a3e63512",
-    border: "1px solid #a3e63540",
-    borderRadius: 5,
-    padding: "8px 10px",
-  },
-  heading: {
-    fontSize: 32,
-    letterSpacing: -1,
-    margin: "20px 0 8px",
-  },
-  subtitle: {
-    color: "#9ba69e",
-    fontSize: 14,
-    lineHeight: 1.6,
-    margin: "0 0 26px",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 11,
-  },
-  label: {
-    fontSize: 11,
-    fontWeight: 800,
-    letterSpacing: 1,
-    color: "#d5ddd6",
-    marginTop: 7,
-  },
-  input: {
-    display: "block",
-    width: "100%",
-    boxSizing: "border-box",
-    background: "#0b100d",
-    border: "1px solid #354239",
-    color: "#ffffff",
-    borderRadius: 8,
-    padding: 14,
-    fontSize: 14,
-    outlineColor: "#a3e635",
-  },
-  passwordWrapper: {
-    position: "relative",
-  },
-  showButton: {
-    position: "absolute",
-    right: 10,
-    top: "50%",
-    transform: "translateY(-50%)",
-    background: "transparent",
-    border: 0,
-    color: "#a3e635",
-    fontSize: 10,
-    fontWeight: 800,
-    cursor: "pointer",
-    padding: 8,
-  },
-  loginButton: {
-    marginTop: 15,
-    width: "100%",
-    boxSizing: "border-box",
-    border: 0,
-    borderRadius: 8,
-    padding: 16,
-    background: "#a3e635",
-    color: "#11170c",
-    fontWeight: 900,
-    fontSize: 12,
-    letterSpacing: 0.7,
-    cursor: "pointer",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  error: {
-    color: "#ff9999",
-    background: "#4a1717",
-    border: "1px solid #7c2929",
-    padding: 11,
-    borderRadius: 7,
-    fontSize: 12,
-  },
-  footer: {
-    display: "flex",
-    alignItems: "center",
-    gap: 8,
-    borderTop: "1px solid #29352c",
-    marginTop: 28,
-    paddingTop: 18,
-    color: "#849087",
-    fontSize: 9,
-    letterSpacing: 0.7,
-  },
-  statusDot: {
-    width: 7,
-    height: 7,
-    borderRadius: "50%",
-    background: "#a3e635",
-    flexShrink: 0,
-  },
-  demo: {
-    marginLeft: "auto",
-    whiteSpace: "nowrap",
-  },
-  bottomText: {
-    marginTop: 24,
-    color: "#728077",
-    fontSize: 10,
-    letterSpacing: 1,
-    textAlign: "center",
-  },
-};

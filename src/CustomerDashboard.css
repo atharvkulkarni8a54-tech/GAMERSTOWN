@@ -4,7 +4,7 @@
   --gt-panel: #12151e;
   --gt-border: #292d39;
   --gt-muted: #9298aa;
-  --gt-purple: #9b76ff;
+  --gt-purple: #75b7ed;
   min-height: 100vh;
   display: flex;
   background: var(--gt-bg);
@@ -39,12 +39,12 @@
   flex-shrink: 0;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, #a78bfa, #7045e9);
+  background: linear-gradient(135deg, #8fc7f0, #4d91c4);
   color: white;
   border-radius: 12px;
   font-size: 25px;
   font-weight: 900;
-  box-shadow: 0 6px 24px #8b5cf626;
+  box-shadow: 0 6px 24px #75b7ed26;
 }
 
 .gt-brand h2 {
@@ -78,8 +78,8 @@
   width: 39px;
   height: 39px;
   border-radius: 50%;
-  background: #30234b;
-  color: #d5c6ff;
+  background: #263e50;
+  color: #b6e0ff;
   font-weight: 800;
 }
 
@@ -184,7 +184,7 @@
   place-items: center;
   width: 26px;
   height: 26px;
-  border: 1px solid #8b5cf6;
+  border: 1px solid #75b7ed;
   border-radius: 50%;
   color: #c4b5fd;
   font-weight: 700;
@@ -329,7 +329,7 @@
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 5px 18px #8b5cf626;
+  box-shadow: 0 5px 18px #75b7ed26;
 }
 
 .gt-primary-button:hover {
@@ -361,7 +361,7 @@
   top: -100px;
   right: 8%;
   border-radius: 50%;
-  background: #8b5cf6;
+  background: #75b7ed;
   opacity: 0.08;
   filter: blur(60px);
   pointer-events: none;
@@ -448,7 +448,7 @@
   width: 45px;
   margin-top: 19px;
   border-radius: 5px;
-  background: #9b76ff;
+  background: #75b7ed;
 }
 
 .gt-wallet-card .gt-stat-line {
@@ -909,3 +909,26 @@
     transition: none;
   }
 }
+
+/* Match the standalone customer portal to the refreshed operator-console theme. */
+.gt-customer-app { --gt-bg: #080d13; --gt-panel: #101923; --gt-border: #263746; --gt-muted: #91a2b2; --gt-purple: #4ce6b7; background: radial-gradient(ellipse at 70% -20%,#142a31 0,transparent 42%),var(--gt-bg); }
+.gt-sidebar { background: rgba(9,15,22,.97); border-right-color: #22313e; }
+.gt-brand-icon { background: linear-gradient(145deg,#64f0c7,#20b98e); color: #062019; box-shadow: 0 8px 28px #2de0ad20; }
+.gt-player-card, .gt-help-card { background: #101a24; }
+.gt-avatar, .gt-header-avatar { background: #143c34; color: #62edc1; }
+.gt-nav-button.gt-nav-active { background: linear-gradient(90deg,#12362e,#10251f); border-color: #245b4c; box-shadow: inset 3px 0 #4ce6b7; }
+.gt-nav-icon, .gt-nav-indicator { color: #62edc1; }
+.gt-hero { border-color: #2a514a; background: radial-gradient(ellipse at 90% 50%,#1e5c4a50,transparent 45%),linear-gradient(110deg,#10221f,#101923 70%); }
+.gt-hero-label, .gt-stat-icon, .gt-stat-line { color: #62edc1; }
+.gt-primary-button { background: linear-gradient(135deg,#64f0c7,#20b98e); color: #062019; box-shadow: 0 5px 18px #38d9aa16; }
+.gt-stat-card, .gt-session-panel, .gt-detail-panel, .gt-wallet-panel, .gt-game-card { background: linear-gradient(145deg,#111c27,#0e1720); border-color: #263746; }
+.gt-game-card:hover { border-color: #4ce6b7; box-shadow: 0 8px 24px #38d9aa16; }
+.gt-session-badge, .gt-active-tag { background: #123b30; color: #6eeac4; }
+.gt-counter-notice, .gt-notice-box { border-color: #2b5147; background: #10241f; }
+@media (max-width: 760px) { .gt-main { padding: 20px 14px; } .gt-sidebar { width: 100%; } }
+
+/* Cool slate and blue accents to match the GG Circuit-inspired admin UI */
+.gt-customer-app { --gt-bg:#20262d; --gt-panel:#29323b; --gt-border:#3b4855; --gt-muted:#a3afb9; --gt-purple:#75b7ed; background:#20262d; }
+.gt-sidebar { background:#303943; border-right-color:#46525e; }
+.gt-player-card,.gt-card,.gt-panel { background:#29323b; border-color:#3b4855; }
+.gt-nav-item.active { background:#43515e; color:#9fd5ff; border-color:#526575; }
