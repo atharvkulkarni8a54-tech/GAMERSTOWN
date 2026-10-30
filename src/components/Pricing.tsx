@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { getPricingPackages, type PricingPackage } from "../lib/pricing";
 
@@ -8,51 +7,31 @@ export default function Pricing() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    async function loadPackages() {
-      try {
-        const data = await getPricingPackages();
-        setPackages(data);
-      } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Unable to load pricing packages."
-        );
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    void loadPackages();
+    let active = true;
+    getPricingPackages()
+      .then((rows) => { if (active) setPackages(rows); })
+      .catch((err: unknown) => {
+        if (active) setError(err instanceof Error ? err.message : "Could not load pricing packages.");
+      })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
   }, []);
 
   return (
     <section className="panel">
-      <h2>Gaming Packages & Pricing</h2>
-      <p>Prices loaded from the GAMERS TOWN database.</p>
-
-      {loading && <p>Loading packages...</p>}
-      {error && <p role="alert">{error}</p>}
-
-      {!loading && !error && packages.length === 0 && (
-        <p>No active pricing packages found.</p>
-      )}
-
-      {!loading && !error && packages.length > 0 && (
+      <h2>Gaming packages & pricing</h2>
+      <p>Active packages are loaded from the Supabase pricing table.</p>
+      {loading ? <p>Loading packages…</p> : error ? <p role="alert">{error}</p> : packages.length === 0 ? (
+        <p>No active pricing packages found. Add active packages in Supabase to display them here.</p>
+      ) : (
         <div className="customer-table">
-          <div className="table-head">
-            <span>Package</span>
-            <span>Duration</span>
-            <span>Weekday</span>
-            <span>Weekend</span>
-          </div>
-
+          <div className="table-head"><span>Package</span><span>Duration</span><span>Weekday</span><span>Weekend</span></div>
           {packages.map((item) => (
             <div className="table-row" key={item.id}>
-              <strong>{item.package_name}</strong>
-              <span>{item.duration_minutes / 60} hour(s)</span>
-              <strong>₹{Number(item.weekday_price).toFixed(2)}</strong>
-              <strong>₹{Number(item.weekend_price).toFixed(2)}</strong>
+              <span>{item.package_name}</span>
+              <span>{item.duration_minutes >= 60 ? `${item.duration_minutes / 60} hr${item.duration_minutes === 60 ? "" : "s"}` : `${item.duration_minutes} min`}</span>
+              <span>₹{Number(item.weekday_price).toFixed(0)}</span>
+              <span>₹{Number(item.weekend_price).toFixed(0)}</span>
             </div>
           ))}
         </div>
