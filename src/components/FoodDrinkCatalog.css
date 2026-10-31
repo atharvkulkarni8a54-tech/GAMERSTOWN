@@ -1,0 +1,86 @@
+
+.fdc {
+  color: #f5f5fa;
+  background: #101321;
+  border: 1px solid #282e43;
+  border-radius: 15px;
+  padding: 22px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.fdc-heading,.fdc-menu-heading,.fdc-combo-intro {
+  display:flex;align-items:center;justify-content:space-between;gap:15px;
+}
+.fdc-kicker {font-size:9px;letter-spacing:1.7px;color:#999bb6;font-weight:800}
+.fdc-heading h2 {font-size:25px;margin:7px 0}
+.fdc-heading p,.fdc-menu-heading p,.fdc-combo-intro p {font-size:12px;color:#a4a8bd;margin:0}
+.fdc button {cursor:pointer;font:inherit}
+.fdc-primary {background:linear-gradient(110deg,#7135db,#356ee9);color:white;border:0;border-radius:8px;padding:11px 15px;font-size:11px;font-weight:700}
+.fdc-secondary {background:#20253a;color:#dfe3f7;border:1px solid #3c4562;border-radius:8px;padding:9px 12px;font-size:11px}
+.fdc-top-stats {display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.fdc-top-stats div {background:#191e31;border:1px solid #2d344c;border-radius:9px;padding:13px}
+.fdc-top-stats span {display:block;color:#9da4bd;font-size:9px;letter-spacing:1px}
+.fdc-top-stats strong {display:block;font-size:21px;margin-top:6px}
+.fdc-combo {background:linear-gradient(135deg,#171c32,#111629);border:1px solid #39415f;border-radius:12px;padding:17px;margin-bottom:22px;box-shadow:0 12px 30px #05081755}
+.fdc-combo-intro {justify-content:flex-start;margin-bottom:17px}
+.fdc-combo-icon {width:38px;height:38px;border:1px solid #7050b8;border-radius:50%;display:grid;place-items:center;color:#c58cff;font-size:20px}
+.fdc-combo-intro h3,.fdc-menu-heading h3 {margin:0 0 5px;font-size:16px}
+.fdc-discount-tag {margin-left:auto;padding:7px 10px;border-radius:7px;background:#422077;color:#d9b5ff;font-size:9px}
+.fdc-combo-selection {display:grid;grid-template-columns:1.3fr .8fr;gap:13px}
+.fdc-combo-selection label {display:block;color:#c6c9d8;font-size:10px;margin-bottom:9px}
+.fdc-mini-products {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.fdc-mini-product {display:flex;align-items:center;gap:8px;min-width:0;text-align:left;padding:7px;background:#1b2237;border:1px solid #303b58;border-radius:7px;color:white}
+.fdc-mini-product.chosen {border-color:#4d9df5;background:#202d48}
+.fdc-mini-image {width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;background:#2a3042;border-radius:5px;overflow:hidden;color:#aeb5d2}
+.fdc-mini-image img {width:100%;height:100%;object-fit:cover}
+.fdc-mini-name {font-size:10px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fdc-mini-name small {display:block;color:#a5adc3;margin-top:3px}
+.fdc-check {margin-left:auto;color:#7bb8ff}
+.fdc-combo-total {padding:12px;background:#1b2237;border:1px solid #303b58;border-radius:8px}
+.fdc-combo-total div {display:flex;justify-content:space-between;gap:8px;padding:7px 0;color:#c7cadd;font-size:10px;border-bottom:1px solid #30374c}
+.fdc-combo-total input {width:65px;background:#101629;color:white;border:1px solid #424c6a;border-radius:5px;padding:4px}
+.fdc-combo-total .fdc-total-line {font-size:13px;color:white;border:0}
+.fdc-combo-note {font-size:9px;color:#929bb5;margin:12px 0 0}
+.fdc-menu-heading {margin:25px 0 15px}
+.fdc-menu-heading p {margin-top:4px}
+.fdc-toolbar {display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:15px}
+.fdc-categories {display:flex;flex-wrap:wrap;gap:6px}
+.fdc-categories button {background:#20253a;border:1px solid #343c55;border-radius:20px;color:#c6cbe0;padding:7px 11px;font-size:10px}
+.fdc-categories button.active {background:#3c3470;border-color:#8b67e8;color:#fff}
+.fdc-toolbar>input {width:175px;background:#171d30;border:1px solid #38415b;border-radius:7px;padding:9px;color:white;font-size:10px}
+.fdc-products {display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px}
+.fdc-product {overflow:hidden;background:#1a2032;border:1px solid #303950;border-radius:9px}
+.fdc-product-photo {height:112px;position:relative;background:linear-gradient(140deg,#262c42,#161b2a);display:grid;place-items:center;color:#707993;font-size:10px}
+.fdc-product-photo img {width:100%;height:100%;object-fit:cover}
+.fdc-delete {position:absolute;right:7px;top:7px;width:23px;height:23px;border:0;border-radius:50%;background:#101321dd;color:#fff;font-size:17px}
+.fdc-product-info {padding:10px}
+.fdc-product-info>span {font-size:9px;color:#a98aff}
+.fdc-product-info h4 {font-size:12px;margin:5px 0 10px}
+.fdc-product-info>div {display:flex;align-items:center;justify-content:space-between;gap:5px}
+.fdc-product-info strong {font-size:13px}
+.fdc-product-info small {font-size:9px;color:#9da5bb}
+.fdc-empty,.fdc-empty-state p {color:#9da5bb;font-size:11px}
+.fdc-empty-state {grid-column:1/-1;text-align:center;padding:30px;border:1px dashed #424b67;border-radius:10px}
+.fdc-empty-state>span {font-size:30px;color:#a98aff}
+.fdc-empty-state h3 {font-size:14px}
+.fdc-overlay {position:fixed;inset:0;z-index:9999;background:#050713c9;display:grid;place-items:center;padding:15px}
+.fdc-modal {position:relative;width:min(100%,420px);max-height:90vh;overflow:auto;background:#1b2032;border:1px solid #424b68;border-radius:13px;padding:22px;color:white;box-sizing:border-box}
+.fdc-modal h3 {margin:0 0 6px;font-size:18px}
+.fdc-modal>p {color:#a5acc0;font-size:11px;margin:0 0 17px}
+.fdc-modal>label:not(.fdc-upload),.fdc-form-row label {display:block;color:#cbd0e0;font-size:10px;margin:12px 0}
+.fdc-modal input,.fdc-modal select {display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:10px;background:#111629;border:1px solid #3b4561;border-radius:7px;color:white}
+.fdc-upload {height:125px;border:1px dashed #69769b;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;overflow:hidden;color:#d2c1ff}
+.fdc-upload img {width:100%;height:100%;object-fit:contain}
+.fdc-upload b {font-size:24px}
+.fdc-upload span {font-size:11px}
+.fdc-upload small {font-size:9px;color:#9ea7c1}
+.fdc-form-row {display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fdc-save {width:100%;margin-top:10px}
+.fdc-modal-close {position:absolute;right:13px;top:10px;border:0;background:transparent;color:white;font-size:24px}
+@media(max-width:650px) {
+  .fdc {padding:13px}
+  .fdc-combo-selection {grid-template-columns:1fr}
+  .fdc-toolbar {align-items:stretch;flex-direction:column}
+  .fdc-toolbar>input {width:auto}
+  .fdc-mini-products {grid-template-columns:1fr}
+}

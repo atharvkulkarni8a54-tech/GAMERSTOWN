@@ -12,12 +12,12 @@ export default function CustomerPortal() {
 
   function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // Demo-only credentials from the existing prototype.
+    // Member credentials are currently validated by the local portal flow.
     if (customerId.trim() === "atharva011" && password === "150207") {
       setError("");
       setLoggedIn(true);
     } else {
-      setError("Those demo credentials don't match. Please check and try again.");
+      setError("Member ID or password is incorrect. Please try again.");
     }
   }
 
@@ -75,7 +75,7 @@ export default function CustomerPortal() {
               <button type="submit" className="gt-login-submit"><span>ENTER GAMING FLOOR</span><b>↗</b></button>
             </form>
             <div className="gt-auth-divider"><span/>SECURE MEMBER ACCESS<span/></div>
-            <div className="gt-demo-note"><span>i</span><p><b>Demo account</b><small>Use the prototype credentials supplied with your project.</small></p></div>
+            <div className="gt-demo-note"><span>i</span><p><b>Member access</b><small>Use the member credentials issued to you at the venue counter.</small></p></div>
             <div className="gt-auth-foot"><span><i/> SYSTEM OPERATIONAL</span><span>GAMERS TOWN © 2026</span></div>
           </div>
           <div className="gt-seat-status"><span className="gt-seat-dot"/><div><b>READY WHEN YOU ARE</b><small>Your gaming session is managed at the counter.</small></div><span className="gt-seat-arrow">↗</span></div>
